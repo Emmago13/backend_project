@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\About;
 use Illuminate\Http\Request;
 
 class AboutController extends Controller
@@ -13,7 +14,8 @@ class AboutController extends Controller
      */
     public function index()
     {
-        //
+        $reponse["abouts"] = About::all();
+        return view("about.index",$reponse);
     }
 
     /**
