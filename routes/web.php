@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',"DashboardController@index")->name("home.home");
+Route::get('/',"DashboardController@index")->name("Dashboard");
 
 // Route::prefix('Dashboard')->group(function (){
 //     Route::get('/',"DashboardController@index");

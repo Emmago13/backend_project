@@ -15,7 +15,7 @@ class AboutController extends Controller
     public function index()
     {
         $reponse["abouts"] = About::all();
-        return view("about.index",$reponse);
+        return view('about.index',$reponse);
     }
 
     /**
