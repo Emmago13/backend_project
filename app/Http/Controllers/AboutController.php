@@ -83,4 +83,15 @@ class AboutController extends Controller
     {
         //
     }
+
+    public function saveApi(Request $request)
+    {
+        $data = $request->all();
+        try {
+            AboutDB::insert($data)
+        } catch (\Throwable $th) {
+            return response()->json(["message"=> "Se creo un error {$th->getMessage()}"],404);
+        }
+        return response()->json(["message" => "Se creo el registro con exito"],201);
+    }
 }
