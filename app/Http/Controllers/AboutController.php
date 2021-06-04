@@ -14,8 +14,18 @@ class AboutController extends Controller
      */
     public function index()
     {
-        $reponse["abouts"] = About::all();
-        return view('about.index',$reponse);
+        $repo["abouts"] = About::all();
+        return view('about.index',$repo);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input("search");
+        $result = About::select()
+            ->where("name","like","%$search%")
+            ->orWhere("email","like","%$search%")
+            ->get();
+        return view("about.index")->with(["abouts" => $result]);
     }
 
     /**
@@ -25,7 +35,7 @@ class AboutController extends Controller
      */
     public function create()
     {
-        //
+        return view("about.create");
     }
 
     /**
@@ -36,7 +46,9 @@ class AboutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except("_token");
+        About::insert($data);
+        return redirect()->route("about.index");
     }
 
     /**
@@ -58,7 +70,8 @@ class AboutController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = About::findOrfail($id);
+        return view("about.edit")->with(["about" =>$data]);
     }
 
     /**
@@ -70,7 +83,9 @@ class AboutController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except("_token","_method");
+        About::where("id","=",$id)->update($data);
+        return redirect()->route("about.index");
     }
 
     /**
@@ -81,17 +96,18 @@ class AboutController extends Controller
      */
     public function destroy($id)
     {
-        //
+        About::destroy($id);
+        return redirect()->route("about.index");
     }
 
     public function saveApi(Request $request)
     {
-        $data = $request->all();
-        try {
-            AboutDB::insert($data)
-        } catch (\Throwable $th) {
-            return response()->json(["message"=> "Se creo un error {$th->getMessage()}"],404);
-        }
-        return response()->json(["message" => "Se creo el registro con exito"],201);
+        // $data = $request->all();
+        // try {
+        //     AboutDB::insert($data)
+        // } catch (\Throwable $th) {
+        //     return response()->json(["message"=> "Se creo un error {$th->getMessage()}"],404);
+        // }
+        // return response()->json(["message" => "Se creo el registro con exito"],201);
     }
 }
