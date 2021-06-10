@@ -21,7 +21,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="message">Message</label>
-            <textarea name="message" id="message" class="form-control" cols="30" rows="10" {{$about->message}}></textarea>
+            <textarea name="message" id="message" class="form-control" cols="30" rows="10">{{$about->message}}</textarea>
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
       </form>

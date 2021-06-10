@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\About;
+use App\Mail\AboutMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AboutController extends Controller
 {
@@ -102,12 +104,13 @@ class AboutController extends Controller
 
     public function saveApi(Request $request)
     {
-        // $data = $request->all();
-        // try {
-        //     AboutDB::insert($data)
-        // } catch (\Throwable $th) {
-        //     return response()->json(["message"=> "Se creo un error {$th->getMessage()}"],404);
-        // }
-        // return response()->json(["message" => "Se creo el registro con exito"],201);
+        $data = $request->all();
+        try {
+            About::insert($data);
+            Mail::to($data["email"])->send(new AboutMail($data));
+        } catch (\Throwable $th) {
+            return response()->json(["message"=> "Se creo un error {$th->getMessage()}"],404);
+        }
+        return response()->json(["message" => "Se creo el registro con exito"],201);
     }
 }
