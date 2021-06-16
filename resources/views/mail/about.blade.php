@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
-    <title>Mensaje Recibido con exíto</title>
+    <title>Mensaje Recibido con exito</title>
 </head>
 <body>
     <p>Hola! {{ $about_mail["name"] }}</p>

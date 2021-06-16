@@ -61,7 +61,8 @@ class AboutController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = About::findOrfail($id);
+        return view("about.info")->with(["about"=>$data]);
     }
 
     /**
