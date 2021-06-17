@@ -25,3 +25,6 @@ Route::prefix('about')->group(function () {
 });
 
 Route::resource('participantes', "ParticipantesController");
+Route::prefix('participantes')->group(function () {
+    Route::post('search', "ParticipantesController@search")->name("participantes.search");
+});

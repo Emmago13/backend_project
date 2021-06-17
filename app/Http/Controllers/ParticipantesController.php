@@ -18,6 +18,18 @@ class ParticipantesController extends Controller
         return view('participantes.index',$repo);
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input("search");
+        $result = Participantes::select()
+            ->where("nombre","like","%$search%")
+            ->orWhere("apellido","like","%$search%")
+            ->orWhere("edad","like","%$search%")
+            ->orWhere("pais","like","%$search%")
+            ->get();
+        return view("participantes.index")->with(["participantes"=>$result]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -49,7 +61,8 @@ class ParticipantesController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Participantes::findOrfail($id);
+        return view("participantes.info")->with(["participante"=>$data]);
     }
 
     /**
@@ -60,7 +73,8 @@ class ParticipantesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Participantes::findOrfail($id);
+        return view("participantes.edit")->with(["participante"=>$data]);
     }
 
     /**
@@ -72,7 +86,9 @@ class ParticipantesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except("_token","_method");
+        Participantes::where("id","=",$id)->update($data);
+        return redirect()->route("participantes.index");
     }
 
     /**
@@ -83,6 +99,7 @@ class ParticipantesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Participantes::destroy($id);
+        return redirect()->route("participantes.index");
     }
 }
